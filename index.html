@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cordel: monte fluxos de atendimento com bots e agentes de IA e publique no WhatsApp, Telegram e Twilio." />
+  <link rel="icon" type="image/svg+xml" href="cordel.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet" />
+  <title>Cordel</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f2f5fa; --fg: #1c2536; --card: #fff; --muted: #5b6779; --border: #e3e8f0;
+      --primary: #1f6bff; --primary-fg: #fff; --accent: #e8f0ff; --brand: #5142c1; --paper: #fff4d9;
+      --shadow: 0 6px 18px rgb(16 25 43 / .08), 0 2px 6px rgb(16 25 43 / .05);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+        --bg: #0f1522; --fg: #e8edf6; --card: #182132; --muted: #a3afc2; --border: #2a3549;
+        --primary: #5b92ff; --primary-fg: #0b1220; --accent: #22345a; --brand: #8b7ff0;
+        --shadow: 0 6px 18px rgb(0 0 0 / .35);
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 "Nunito Sans", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+    .btn { display: inline-block; padding: .7rem 1.25rem; border-radius: 10px; font-weight: 700; text-decoration: none; border: 1px solid var(--border); background: var(--card); }
+    .btn.primary { background: var(--primary); color: var(--primary-fg); border-color: transparent; }
+    .btn:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.25rem; text-decoration: none; }
+    .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; padding: 56px 0 72px; }
+    .eyebrow { color: var(--brand); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: .8rem; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin: .4rem 0 1rem; letter-spacing: -.02em; }
+    h2 { font-size: clamp(1.5rem, 3.5vw, 2.1rem); line-height: 1.2; margin: 0 0 .5rem; letter-spacing: -.01em; }
+    h3 { margin: .6rem 0 .3rem; font-size: 1.05rem; }
+    .lead { color: var(--muted); font-size: 1.15rem; max-width: 34rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .flow { background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 20px; }
+    .flow svg { width: 100%; height: auto; display: block; }
+    section { padding: 64px 0; }
+    .sub { color: var(--muted); max-width: 40rem; margin: 0 0 32px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+    .card p { color: var(--muted); margin: 0; }
+    .icon { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--accent); color: var(--primary); }
+    .icon svg { width: 22px; height: 22px; }
+    ol.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: s; }
+    ol.steps li { counter-increment: s; }
+    ol.steps li::before { content: counter(s); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: #fff; font-weight: 800; }
+    .channels { display: flex; flex-wrap: wrap; gap: 12px; }
+    .chip { background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: .5rem 1.1rem; font-weight: 700; }
+    footer { color: var(--muted); font-size: .9rem; padding: 32px 0 48px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding-top: 24px; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      ol.steps { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .grid, ol.steps { grid-template-columns: 1fr; }
+      section { padding: 44px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="./"><img src="cordel.svg" alt="" width="36" height="36" />Cordel</a>
+      <a class="btn" href="#como-funciona">Como funciona</a>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div>
+          <div class="eyebrow">Atendimento automatizado</div>
+          <h1>Conversas que seguem o fio, do primeiro “oi” ao encerramento.</h1>
+          <p class="lead">O Cordel é a plataforma para desenhar fluxos de atendimento com bots e agentes de IA, testar cada caminho e publicar no WhatsApp, no Telegram e no Twilio.</p>
+          <div class="actions">
+            <a class="btn primary" href="#recursos">Conheça os recursos</a>
+            <a class="btn" href="#como-funciona">Como funciona</a>
+          </div>
+        </div>
+        <div class="flow" aria-hidden="true">
+          <svg viewBox="0 0 360 260" fill="none" stroke-width="2">
+            <path d="M180 58v34M180 128v18c0 10-8 18-18 18H88c-10 0-18 8-18 18v12M180 146v18c0 10 8 18 18 18h74c10 0 18 8 18 18v-6" stroke="var(--border)" />
+            <rect x="120" y="18" width="120" height="40" rx="10" fill="var(--brand)" />
+            <text x="180" y="43" text-anchor="middle" fill="#fff" font-weight="800" font-size="14" stroke="none">Início</text>
+            <rect x="100" y="92" width="160" height="36" rx="10" fill="var(--accent)" stroke="var(--primary)" />
+            <text x="180" y="115" text-anchor="middle" fill="var(--fg)" font-weight="700" font-size="13" stroke="none">Agente de IA responde</text>
+            <rect x="14" y="194" width="112" height="40" rx="10" fill="var(--card)" stroke="var(--border)" />
+            <text x="70" y="218" text-anchor="middle" fill="var(--fg)" font-weight="700" font-size="13" stroke="none">Botões</text>
+            <rect x="234" y="194" width="112" height="40" rx="10" fill="var(--card)" stroke="var(--border)" />
+            <text x="290" y="218" text-anchor="middle" fill="var(--fg)" font-weight="700" font-size="13" stroke="none">Encerrar</text>
+          </svg>
+        </div>
+      </div>
+
+      <section id="recursos" aria-labelledby="recursos-titulo">
+        <h2 id="recursos-titulo">Tudo o que o seu atendimento precisa</h2>
+        <p class="sub">Do desenho do fluxo ao histórico de cada contato, em um só painel.</p>
+        <div class="grid">
+          <div class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a3 3 0 0 0 3 3h6"/></svg></div>
+            <h3>Editor visual de fluxos</h3>
+            <p>Arraste blocos, conecte caminhos e configure botões e destinos sem escrever código.</p>
+          </div>
+          <div class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></div>
+            <h3>Agentes de IA</h3>
+            <p>Agentes com prompts próprios respondem em linguagem natural dentro do fluxo.</p>
+          </div>
+          <div class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 12h4l6-6M11 12l6 6"/></svg></div>
+            <h3>Roteadores com vários bots</h3>
+            <p>Combine bots em um roteador, com bot inicial e de finalização definidos.</p>
+          </div>
+          <div class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
+            <h3>Rascunho e publicação</h3>
+            <p>Edite com segurança e publique só quando a nova versão estiver pronta.</p>
+          </div>
+          <div class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-5A8 8 0 1 1 21 12z"/></svg></div>
+            <h3>Chat de teste</h3>
+            <p>Converse com a configuração publicada antes de levar o fluxo aos seus clientes.</p>
+          </div>
+          <div class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 4a3 3 0 0 1 0 6M21 20a6 6 0 0 0-4-5.6"/></svg></div>
+            <h3>Contatos e histórico</h3>
+            <p>Consulte conversas, mídias recebidas e as variáveis salvas de cada contato.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="como-funciona" aria-labelledby="como-titulo">
+        <h2 id="como-titulo">Como funciona</h2>
+        <p class="sub">Quatro passos entre a ideia e o atendimento no ar.</p>
+        <ol class="steps">
+          <li><h3>Crie um roteador</h3><p class="sub">Reúna os bots que vão atender e escolha o bot inicial.</p></li>
+          <li><h3>Desenhe o fluxo</h3><p class="sub">Use a paleta para adicionar mensagens, botões, agentes e o encerramento.</p></li>
+          <li><h3>Teste</h3><p class="sub">Simule conversas no chat de teste e ajuste cada caminho.</p></li>
+          <li><h3>Publique</h3><p class="sub">Conecte um canal e coloque a nova versão no ar.</p></li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="canais-titulo">
+        <h2 id="canais-titulo">Onde seus clientes já estão</h2>
+        <p class="sub">Conecte o mesmo fluxo aos canais de mensagem mais usados.</p>
+        <ul class="channels" style="list-style:none;padding:0;margin:0">
+          <li class="chip">WhatsApp oficial (API Cloud da Meta)</li>
+          <li class="chip">Telegram</li>
+          <li class="chip">Twilio</li>
+          <li class="chip">API de chat</li>
+        </ul>
+      </section>
+
+    </main>
+
+    <footer>
+      <span>© Cordel</span>
+    </footer>
+  </div>
+</body>
+</html>

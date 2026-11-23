@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-labelledby="title">
+  <title id="title">Cordel</title>
+  <rect width="48" height="48" rx="9" fill="#5142c1"/>
+  <path d="M6 12c10 3.5 26 3.5 36 0" fill="none" stroke="#d4caff" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M13 17h22v19l-3 3H13z" fill="#fff4d9"/>
+  <path d="M32 39v-3h3z" fill="#c9b9f5"/>
+  <path d="M18 18v-5m12 5v-5" fill="none" stroke="#fff4d9" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M24 24v4h-6v5m6-5h6v5" fill="none" stroke="#5142c1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#5142c1">
+    <rect x="22.5" y="22" width="3" height="3" rx=".4"/>
+    <rect x="16.5" y="32" width="3" height="3" rx=".4"/>
+    <rect x="28.5" y="32" width="3" height="3" rx=".4"/>
+  </g>
+</svg>
